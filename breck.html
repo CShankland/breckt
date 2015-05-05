@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Breck Rage Simulator 2015</title>
+	</head>
+	<body>
+		<label>Enter your phrase:</label>
+		<input type="text" placeholder="Fun words" id="fun_words" />
+		<input type="button" id="generate" value="Generate!" />
+		<br />
+		<label>Rage level:</label>
+		<input type="number" id="rage_level" value="2" />
+		<input type="button" id="breckt" value="Over 9000!" />
+		<br />
+		<hr>
+		<br />
+		<h3>&lt;3 Breck</h3>
+		<div id="output" style="font-size: 40px; font-family: calibri;"></div>
+
+		<script type="text/javascript">
+		var taskId = null;	
+		function generate() {
+			window.cancelAnimationFrame(taskId);
+			var output = document.getElementById("output");
+			while (output.firstChild) { output.removeChild(output.firstChild); }
+
+			var rageLevelElement = document.getElementById("rage_level");
+			var rageLevel = +rageLevelElement.value;
+
+			var textElement = document.getElementById("fun_words");
+			var text = textElement.value;
+
+			for (var idx = 0; idx < text.length; ++idx) {
+				var char = text[idx];
+				var span = document.createElement("span");
+				span.innerHTML = char;
+				var kern = rageLevel - Math.random() * (2 * rageLevel);
+				span.style.letterSpacing = kern + "px";
+				output.appendChild(span);
+			}
+		}
+
+		var btn = document.getElementById("generate");
+		btn.onclick = generate;
+
+		function breckt() {
+			window.cancelAnimationFrame(taskId);
+
+			var output = document.getElementById("output");
+			var children = output.children;
+
+			var rageLevelElement = document.getElementById("rage_level");
+			var rageLevel = +rageLevelElement.value;
+
+			var prev = null;
+			function lool() {
+				if (null === prev) {
+					prev = Date.now();
+				}
+
+				var now = Date.now();
+				var dt = now - prev;
+				if (dt > 100) {
+					for (var idx = 0; idx < children.length; ++idx) {
+						var child = children[idx];
+						var kern = rageLevel - Math.random() * (2 * rageLevel);
+						child.style.letterSpacing = kern + "px";
+					}
+					prev = now;
+				}
+
+				taskId = window.requestAnimationFrame(lool);
+			};
+			taskId = window.requestAnimationFrame(lool);
+		}
+
+		var brecktBtn = document.getElementById("breckt");
+		brecktBtn.onclick = breckt;
+		</script>
+	</body>
+</html>
