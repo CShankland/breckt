@@ -18,6 +18,7 @@
 		<div id="output" style="font-size: 40px; font-family: calibri;"></div>
 
 		<script type="text/javascript">
+
 		var taskId = null;	
 		function generate() {
 			window.cancelAnimationFrame(taskId);
@@ -76,6 +77,28 @@
 
 		var brecktBtn = document.getElementById("breckt");
 		brecktBtn.onclick = breckt;
+
+		var search = window.location.search.substring(1);
+		var items = search.split("&");
+		items.forEach(function initialValues(item) {
+			var s = item.split("=");
+			var key = s[0];
+			var value = s[1];
+
+			switch (key) {	
+				case "p":
+				case "phrase":
+					document.getElementById("fun_words").value = value;
+					break;
+				case "l":
+				case "lvl":
+					document.getElementById("rage_level").value = value;
+					break;
+			}
+		});
+
+		generate();
+
 		</script>
 	</body>
 </html>
